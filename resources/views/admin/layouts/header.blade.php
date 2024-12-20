@@ -1,6 +1,5 @@
 <h3 class="text-light layer bg-primary py-4">
     <span>Shoppe</span>
-    <span>Quản lý sản phẩm</span>
 </h3>
 
 

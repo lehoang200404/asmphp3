@@ -17,13 +17,22 @@ class ProductsController extends Controller
             'listProduct' => $listProduct
         ]);
     }
-
     public function addProduct(){
         $categories = Category::all();
         return view('admin.products.add-product', compact('categories'));
     }
 
     public function addPostProduct(Request $request){
+        $request->validate([
+            'nameProduct' => 'required',
+            'descriptionProduct' => 'required',
+            'priceProduct' => 'required|numeric',
+        ],[
+            'nameProduct.required' => 'Tên sản phẩm không được để trống',
+            'descriptionProduct.required' => 'Mô tả sản phẩm không được để trống',
+            'priceProduct.required' => 'Giá sản phẩm không được để trống',
+            'priceProduct.numeric' => 'Giá sản phẩm phải là chữ số',
+        ]);
         $linkImage = null;
         if($request->hasFile('imageProduct')){
             $image = $request->file('imageProduct');
@@ -51,6 +60,11 @@ class ProductsController extends Controller
         $product->delete();
         return redirect()->route('admin.products.listProduct')
         ->with(['message' => 'Xóa thành công']);
+    }
+
+    public function detailProduct($product_id){
+        $product = Product::where('product_id', $product_id)->first();
+        return view('admin.products.detail-product')->with(['product' => $product]);
     }
 
     public function updateProduct($product_id){

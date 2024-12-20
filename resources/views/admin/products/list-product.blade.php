@@ -8,6 +8,20 @@
     <div class="p-4" style="min-height: 800px;">
         <h4 class="text-primary mb-4">Danh sách sản phẩm</h4>
         <a href="{{ route('admin.products.addProduct') }}" class="btn btn-info">Thêm mới</a>
+        {{-- <form method="GET" action="{{ route('admin.products.listProduct') }}" class="mt-3">
+            <div class="form-group">
+                <label for="category">Chọn danh mục:</label>
+                <select id="category" name="category_id" class="form-control">
+                    <option value="">Tất cả</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </form> --}}
         <table class="table mt-3">
             <thead>
                 <tr>
@@ -33,7 +47,9 @@
                         </td>
                         <td>
                             <a href="{{ route('admin.products.updateProduct', $value->product_id) }}"
-                                class="btn btn-warning">Sửa</a>
+                                class="btn btn-primary">Sửa</a>
+                                <a href="{{ route('admin.products.detailProduct', $value->product_id) }}"
+                                    class="btn btn-warning">Chi tiết</a>
                             <form action="{{ route('admin.products.deleteProduct', $value->product_id) }}" method="POST">
                                 @method('delete')
                                 @csrf
